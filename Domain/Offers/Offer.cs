@@ -1,4 +1,5 @@
-﻿using Domain.Colors;
+﻿using Domain.Categories;
+using Domain.Colors;
 using Domain.Deliveries;
 using System;
 using System.Collections.Generic;
@@ -29,7 +30,7 @@ namespace Domain.Offers
         public string UrlImage1 { get; set; }
         public string UrlImage2 { get; set; }
         public string UrlImage3 { get; set; }
-
+        public Category Category { get; set; }
 
     }
 }
