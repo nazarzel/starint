@@ -17,6 +17,8 @@ namespace Domain.Offers
         public string Description { get; set; }
         [Column(TypeName = "decimal(18,4)")]
         public decimal Price { get; set; }
+        [Column(TypeName = "decimal(18,4)")]
+        public decimal OldPrice { get; set; }
         public double Pitch { get; set; }
         public string ModuleSize { get; set; }
         public string Type { get; set; }
@@ -25,8 +27,8 @@ namespace Domain.Offers
         public string Size { get; set; }
         public int Brightness { get; set; }
         public string Communication { get; set; }
-        public IEnumerable<Color> Colors { get; set; }
-        public IEnumerable<Delivery> Deliveries { get; set; }
+        public List<Color> Colors { get; set; }
+        public List<Delivery> Deliveries { get; set; }
         public string UrlImage1 { get; set; }
         public string UrlImage2 { get; set; }
         public string UrlImage3 { get; set; }
