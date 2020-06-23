@@ -46,6 +46,13 @@
         @RenderSection("Scripts", required: false)
     </body>
     </html>*@
+@using Microsoft.AspNetCore.Identity
+
+
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,7 +133,7 @@
             <div class="row">
                 <div class="col-sm-6">
                     <div class="logo">
-                        <h1><a href="index.html">e<span>Electronics</span></a></h1>
+                        <h1><a asp-controller="Home" asp-action="Index">e<span>Electronics</span></a></h1>
                     </div>
                 </div>
 
@@ -135,7 +142,22 @@
                         <a href="cart.html">Cart - <span class="cart-amunt">$800</span> <i class="fa fa-shopping-cart"></i> <span class="product-count">5</span></a>
                     </div>
                 </div>
-            </div>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <div class="col-sm-6">
+                        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
+                                </li>
+                                <li>
+                                    <button type="submit" class="btn btn-link navbar-btn navbar-link">Logout</button>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                }
+                </div>
         </div>
     </div> <!-- End site branding area -->
 
@@ -158,8 +180,10 @@
                         <li><a href="cart.html">Cart</a></li>
                         <li><a href="checkout.html">Checkout</a></li>
                         <li><a href="#">Category</a></li>
-                        <li><a href="#">Others</a></li>
-                        <li><a href="#">Contact</a></li>
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <li><a asp-controller="Admin" asp-action="Index">Admin</a></li>
+                        }
                     </ul>
                 </div>
             </div>
