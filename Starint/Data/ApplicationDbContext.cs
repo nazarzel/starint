@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Starint.Data.Categories;
 using Starint.Data.Colors;
 using Starint.Data.Deliveries;
@@ -10,7 +12,7 @@ using Starint.Data.Users;
 
 namespace Starint.Data
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
     {
         public DbSet<Offer> Offers { get; set; }
         public DbSet<Color> Colors { get; set; }
@@ -18,7 +20,7 @@ namespace Starint.Data
         public DbSet<Order> Orders { get; set; }
         public DbSet<Category> Category { get; set; }
         public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
-        public DbSet<User> Users { get; set; }
+        public DbSet<EmailList> EmailLists { get; set; }
         public DbSet<OfferColor> OfferColors { get; set; }
 
 

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Starint.Data.Users
 {
-    public class User
+    public class EmailList
     {
         public int Id { get; set; }
         public string Email { get; set; }
