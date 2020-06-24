@@ -11,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Starint.Data;
+using Starint.Data.EmailLists;
 
 namespace Starint
 {
@@ -36,6 +37,8 @@ namespace Starint
 
             services.AddControllersWithViews();//services.AddMvc(); would also work still
             services.AddRazorPages();
+
+            services.AddScoped<IEmailListRepository, EmailListRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

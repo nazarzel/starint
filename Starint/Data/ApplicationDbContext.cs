@@ -8,7 +8,7 @@ using Starint.Data.OfferColors;
 using Starint.Data.Offers;
 using Starint.Data.Orders;
 using Starint.Data.ShoppingCartItems;
-using Starint.Data.Users;
+using Starint.Data.EmailLists;
 
 namespace Starint.Data
 {

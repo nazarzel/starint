@@ -31,7 +31,6 @@ namespace Starint.Data.Orders
 
         public string DeliveryAddress1 { get; set; }
         public string DeliveryAddress2 { get; set; }
-        public string DeliveryAddress { get; set; }
         public string DeliveryZipCode { get; set; }
 
         public int DeliveryId { get; set; }
@@ -39,6 +38,9 @@ namespace Starint.Data.Orders
         public decimal TotalSum { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
         public DateTime OrderPlaced { get; set; }
+
+        public string OrderStatus { get; set; }
+
 
     }
 }

@@ -18,5 +18,9 @@ namespace Starint.Controllers
         {
             return View();
         }
+        public IActionResult Products(string category)
+        {
+            return View();
+        }
     }
 }
