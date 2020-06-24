@@ -4,7 +4,7 @@ namespace Starint.Data.Offers
 {
     public interface IOfferRepository
     {
-        IEnumerable<Offer> AllOffers(string category);
+        IEnumerable<Offer> AllOffers { get; }
         void Create(Offer offer);
         void Delete(Offer offer);
         Offer GetById(int id);

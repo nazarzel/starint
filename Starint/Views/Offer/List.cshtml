@@ -1,0 +1,40 @@
+﻿@model Starint.ViewModels.OfferListViewModel
+
+@{
+    ViewData["Title"] = @Model.CurrentCategory;
+}
+
+<div class="single-product-area">
+    <div class="zigzag-bottom"></div>
+    <div class="container">
+        <div class="row">
+            @foreach (var offer in Model.Offers)
+            {
+                <div class="col-md-3 col-sm-6">
+                    <div class="single-shop-product">
+                        <a asp-controller="Offer"
+                            asp-action="Details"
+                            asp-route-id="@offer.Id">
+                            <div class="product-upper">
+                                <img src="@offer.UrlImage1" alt="">
+                            </div>
+                            <h2>
+                                @offer.Name
+                            </h2>
+                        <div class="product-carousel-price">
+                            <ins>@offer.Price zł</ins> @if (offer.OldPrice != 0)
+                            {<del>@offer.OldPrice zł</del>}
+                        </div>
+                        </a>
+                        <div class="product-option-shop">
+                            <a asp-controller="ShoppingCart"
+                               asp-action="AddToShoppingCart"
+                               asp-route-id="@offer.Id" class="add_to_cart_button" data-quantity="1" data-product_sku="" data-product_id="70" rel="nofollow">Dodaj do koszyka</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

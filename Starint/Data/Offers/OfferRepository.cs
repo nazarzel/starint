@@ -14,9 +14,12 @@ namespace Starint.Data.Offers
             _appDbContext = appDbContext;
         }
 
-        public IEnumerable<Offer> AllOffers(string category)
+        public IEnumerable<Offer> AllOffers
         {
-            return _appDbContext.Offers.Where(o => o.Category.Name == category).ToList();
+            get
+            {
+                return _appDbContext.Offers.ToList();
+            }
         }
         public Offer GetById(int id)
         {

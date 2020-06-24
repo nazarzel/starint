@@ -11,7 +11,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Starint.Data;
+using Starint.Data.Categories;
+using Starint.Data.Colors;
 using Starint.Data.EmailLists;
+using Starint.Data.Offers;
+using Starint.Data.Orders;
 
 namespace Starint
 {
@@ -39,6 +43,11 @@ namespace Starint
             services.AddRazorPages();
 
             services.AddScoped<IEmailListRepository, EmailListRepository>();
+            services.AddScoped<IOfferRepository, OfferRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<IColorRepository, ColorRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
