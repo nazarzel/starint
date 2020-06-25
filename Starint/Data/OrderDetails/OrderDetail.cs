@@ -16,7 +16,7 @@ namespace Starint.Data.OrderDetails
         public int OrderId { get; set; }
         public int OfferId { get; set; }
         public int Amount { get; set; }
-        [Column(TypeName = "decimal(18,4)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal Price { get; set; }
         public Offer Offer { get; set; }
         public Order Order { get; set; }

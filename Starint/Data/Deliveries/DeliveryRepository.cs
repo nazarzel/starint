@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Starint.Data.Deliveries
 {
-    public class DeliveryRepository
+    public class DeliveryRepository : IDeliveryRepository
     {
         private readonly ApplicationDbContext _appDbContext;
 

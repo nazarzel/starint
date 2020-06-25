@@ -13,6 +13,8 @@ using Microsoft.Extensions.Hosting;
 using Starint.Data;
 using Starint.Data.Categories;
 using Starint.Data.Colors;
+using Starint.Data.Communications;
+using Starint.Data.Deliveries;
 using Starint.Data.EmailLists;
 using Starint.Data.Offers;
 using Starint.Data.Orders;
@@ -47,6 +49,9 @@ namespace Starint
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IColorRepository, ColorRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IDeliveryRepository, DeliveryRepository>();
+            services.AddScoped<ICommunicationRepository, CommunicationRepository>();
+
 
         }
 

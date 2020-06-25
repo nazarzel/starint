@@ -234,18 +234,17 @@ namespace Starint.Migrations
                     Description = table.Column<string>(nullable: true),
                     Price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     OldPrice = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    Pitch = table.Column<double>(nullable: false),
+                    Pitch = table.Column<int>(nullable: false),
                     ModuleSize = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true),
+                    Type = table.Column<int>(nullable: false),
                     WatchDistance = table.Column<string>(nullable: true),
-                    IPType = table.Column<int>(nullable: false),
                     Size = table.Column<string>(nullable: true),
                     Brightness = table.Column<int>(nullable: false),
-                    Communication = table.Column<string>(nullable: true),
                     UrlImage1 = table.Column<string>(nullable: true),
                     UrlImage2 = table.Column<string>(nullable: true),
                     UrlImage3 = table.Column<string>(nullable: true),
                     CategoryId = table.Column<int>(nullable: true),
+                    Active = table.Column<bool>(nullable: false),
                     OrderId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
@@ -261,6 +260,26 @@ namespace Starint.Migrations
                         name: "FK_Offers_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Communications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    OfferId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Communications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Communications_Offers_OfferId",
+                        column: x => x.OfferId,
+                        principalTable: "Offers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -362,6 +381,37 @@ namespace Starint.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Category",
+                columns: new[] { "Id", "Description", "Name" },
+                values: new object[,]
+                {
+                    { 1, "", "Ekran RGB" },
+                    { 2, "", "Jednokolorowe" },
+                    { 3, "", "Dwukolorowe" },
+                    { 4, "", "Krzyże apteczne" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Communications",
+                columns: new[] { "Id", "Name", "OfferId" },
+                values: new object[,]
+                {
+                    { 1, "USB", null },
+                    { 2, "LAN", null },
+                    { 3, "Wifi", null }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Deliveries",
+                columns: new[] { "Id", "Description", "Name", "OfferId", "Price" },
+                values: new object[,]
+                {
+                    { 1, "", "Kurier DPD", null, 30m },
+                    { 2, "", "Pałeta", null, 100m },
+                    { 3, "", "Odbiór osobisty", null, 0m }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -400,6 +450,11 @@ namespace Starint.Migrations
                 column: "NormalizedUserName",
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Communications_OfferId",
+                table: "Communications",
+                column: "OfferId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Deliveries_OfferId",
@@ -458,6 +513,9 @@ namespace Starint.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Communications");
 
             migrationBuilder.DropTable(
                 name: "Deliveries");

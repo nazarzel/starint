@@ -10,14 +10,14 @@ using Starint.Data;
 namespace Starint.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20200625120435_Initial")]
-    partial class Initial
+    [Migration("20200625202930_decimalFix")]
+    partial class decimalFix
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0-preview9.19423.6")
+                .HasAnnotation("ProductVersion", "3.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -237,6 +237,32 @@ namespace Starint.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Category");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "",
+                            Name = "Ekran RGB"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "",
+                            Name = "Jednokolorowe"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "",
+                            Name = "Dwukolorowe"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "",
+                            Name = "Krzyże apteczne"
+                        });
                 });
 
             modelBuilder.Entity("Starint.Data.Colors.Color", b =>
@@ -252,6 +278,43 @@ namespace Starint.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Colors");
+                });
+
+            modelBuilder.Entity("Starint.Data.Communications.Communication", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("OfferId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OfferId");
+
+                    b.ToTable("Communications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "USB"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "LAN"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Wifi"
+                        });
                 });
 
             modelBuilder.Entity("Starint.Data.Deliveries.Delivery", b =>
@@ -271,13 +334,36 @@ namespace Starint.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OfferId");
 
                     b.ToTable("Deliveries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "",
+                            Name = "Kurier DPD",
+                            Price = 30m
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "",
+                            Name = "Pałeta",
+                            Price = 100m
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "",
+                            Name = "Odbiór osobisty",
+                            Price = 0m
+                        });
                 });
 
             modelBuilder.Entity("Starint.Data.EmailLists.EmailList", b =>
@@ -324,20 +410,17 @@ namespace Starint.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
                     b.Property<int>("Brightness")
                         .HasColumnType("int");
 
                     b.Property<int?>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<string>("Communication")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("IPType")
-                        .HasColumnType("int");
 
                     b.Property<string>("ModuleSize")
                         .HasColumnType("nvarchar(max)");
@@ -346,22 +429,22 @@ namespace Starint.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("OldPrice")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int?>("OrderId")
                         .HasColumnType("int");
 
-                    b.Property<double>("Pitch")
-                        .HasColumnType("float");
+                    b.Property<int>("Pitch")
+                        .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("Size")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Type")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.Property<string>("UrlImage1")
                         .HasColumnType("nvarchar(max)");
@@ -401,7 +484,7 @@ namespace Starint.Migrations
                         .HasColumnType("int");
 
                     b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -477,7 +560,7 @@ namespace Starint.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalSum")
-                        .HasColumnType("decimal(18,4)");
+                        .HasColumnType("decimal(18,2)");
 
                     b.HasKey("Id");
 
@@ -556,6 +639,13 @@ namespace Starint.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Starint.Data.Communications.Communication", b =>
+                {
+                    b.HasOne("Starint.Data.Offers.Offer", null)
+                        .WithMany("Communications")
+                        .HasForeignKey("OfferId");
                 });
 
             modelBuilder.Entity("Starint.Data.Deliveries.Delivery", b =>

@@ -1,6 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Starint.Data;
 using Starint.Data.Categories;
+using Starint.Data.Communications;
+using Starint.Data.Deliveries;
+using Starint.Data.Offers;
 using Starint.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -13,21 +18,30 @@ namespace Starint.Controllers
     public class AdminController : Controller
     {
         private readonly ICategoryRepository categoryRepository;
+        private readonly IOfferRepository offerRepository;
+        private readonly IDeliveryRepository deliveryRepository;
+        private readonly IHtmlHelper htmlHelper;
+        private readonly ICommunicationRepository communicationRepository;
 
         public AdminController(
-            ICategoryRepository categoryRepository
+            ICategoryRepository categoryRepository,
+            IOfferRepository offerRepository,
+            IDeliveryRepository deliveryRepository,
+            IHtmlHelper htmlHelper,
+            ICommunicationRepository communicationRepository
             )
         {
             this.categoryRepository = categoryRepository;
+            this.offerRepository = offerRepository;
+            this.deliveryRepository = deliveryRepository;
+            this.htmlHelper = htmlHelper;
+            this.communicationRepository = communicationRepository;
         }
         public IActionResult Index()
         {
             return View();
         }
-        public IActionResult Products(string category)
-        {
-            return View();
-        }
+        #region Category
         public IActionResult Category()
         {
             return View(new CategoryListViewModel { 
@@ -72,5 +86,43 @@ namespace Starint.Controllers
             ModelState.AddModelError("", "Error");
             return RedirectToAction("Category");
         }
+        #endregion
+        #region Offer
+        public IActionResult Offer()
+        {
+            return View(new OfferListViewModel
+            {
+                Categories = categoryRepository.AllCategories,
+                Offers = offerRepository.AllOffers.OrderBy(o=>o.Category),
+               // Deliveries = deliveryRepository.AllDeliveries,
+                TypesSelectList = htmlHelper.GetEnumSelectList<ScreenType>(),
+                PitchesSelectList = htmlHelper.GetEnumSelectList<Pitch>(),
+                CommunicationsSelectList = GetCommunicationsSelectList(),
+                DeliveriesSelectList = GetDeliveriesSelectList()
+            });
+        }
+        private IEnumerable<SelectListItem> GetCommunicationsSelectList()
+        {
+            var communications = communicationRepository.AllCommunications.Select(x =>
+                                new SelectListItem
+                                {
+                                    Value = x.Id.ToString(),
+                                    Text = x.Name
+                                });
+
+            return new SelectList(communications, "Value", "Text");
+        }
+        private IEnumerable<SelectListItem> GetDeliveriesSelectList()
+        {
+            var deliveries = deliveryRepository.AllDeliveries.Select(x =>
+                                new SelectListItem
+                                {
+                                    Value = x.Id.ToString(),
+                                    Text = x.Price + " " + x.Name
+                                });
+
+            return new SelectList(deliveries, "Value", "Text");
+        }
+        #endregion
     }
 }

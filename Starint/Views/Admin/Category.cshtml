@@ -4,7 +4,7 @@
 }
 <partial name="_AdminMenu" />
 
-<link rel="stylesheet" href="~/css/dataTables.bootstrap4.css">
+<partial name="_IncludeDatatable" />
 
 
 <div class="container">
@@ -38,21 +38,11 @@
         </tbody>
     </table>
 </div>
-<script src="~/js/DataTables/jquery-3.5.1.js"></script>
-<script src="~/js/DataTables/jquery.dataTables.min.js"></script>
-<script src="~/js/DataTables/dataTables.bootstrap4.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
         $('#DataTableCategory').DataTable();
     });
-
-    //$('#editModal1').on('show.bs.modal', function (event) {
-    //    var button = $(event.relatedTarget) // Button that triggered the modal
-    //    var modal = $(this)
-    //    modal.find('.modal-title').text('Edycja ')
-    //    //modal.find('.modal-body input').val(recipient)
-    //})
 </script>
 
 

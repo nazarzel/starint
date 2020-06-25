@@ -34,7 +34,7 @@ namespace Starint.Data.Orders
         public string DeliveryZipCode { get; set; }
 
         public int DeliveryId { get; set; }
-        [Column(TypeName = "decimal(18,4)")]
+        [Column(TypeName = "decimal(18,2)")]
         public decimal TotalSum { get; set; }
         public List<OrderDetail> OrderDetails { get; set; }
         public DateTime OrderPlaced { get; set; }
