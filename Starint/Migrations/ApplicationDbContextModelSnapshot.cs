@@ -162,10 +162,12 @@ namespace Starint.Migrations
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("ProviderDisplayName")
                         .HasColumnType("nvarchar(max)");
@@ -202,10 +204,12 @@ namespace Starint.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(128)")
+                        .HasMaxLength(128);
 
                     b.Property<string>("Value")
                         .HasColumnType("nvarchar(max)");
@@ -272,6 +276,21 @@ namespace Starint.Migrations
                     b.HasIndex("OfferId");
 
                     b.ToTable("Deliveries");
+                });
+
+            modelBuilder.Entity("Starint.Data.EmailLists.EmailList", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmailLists");
                 });
 
             modelBuilder.Entity("Starint.Data.OfferColors.OfferColor", b =>
@@ -416,9 +435,6 @@ namespace Starint.Migrations
                     b.Property<string>("Country")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DeliveryAddress")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("DeliveryAddress1")
                         .HasColumnType("nvarchar(max)");
 
@@ -445,6 +461,9 @@ namespace Starint.Migrations
 
                     b.Property<DateTime>("OrderPlaced")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderStatus")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PaymentType")
                         .HasColumnType("nvarchar(max)");
@@ -484,21 +503,6 @@ namespace Starint.Migrations
                     b.HasIndex("OfferId");
 
                     b.ToTable("ShoppingCartItems");
-                });
-
-            modelBuilder.Entity("Starint.Data.Users.EmailList", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("EmailLists");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

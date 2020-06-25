@@ -1,4 +1,5 @@
-﻿@model Starint.Data.Categories.Category
+﻿
+@{ 
     ViewData["Title"] = "_AdminMenu";
 }
 
@@ -16,7 +17,7 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="#">Zamówienia</a></li>
-                    <li><a href="#">Kategorie</a></li>
+                    <li><a asp-controller="Admin" asp-action="Category">Kategorie</a></li>
                     <li><a href="#">Produkty</a></li>
                     <li><a href="#">Email</a></li>
                     <li><a href="#">Kolory</a></li>
